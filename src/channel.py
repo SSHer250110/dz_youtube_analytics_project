@@ -20,10 +20,6 @@ class Channel:
         # получение данные о канале по его id
         self.channel = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
 
-    def printj(self, dict_to_print: dict) -> None:
-        """Выводит словарь в json-подобном удобном формате с отступами"""
-        print(json.dumps(dict_to_print, indent=2, ensure_ascii=False))
-
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        self.printj(self.channel)
+        print(json.dumps(self.channel, indent=2, ensure_ascii=False))
