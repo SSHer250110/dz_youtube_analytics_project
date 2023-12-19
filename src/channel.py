@@ -63,3 +63,6 @@ class Channel:
                     data_list.append(data_dict)
                 with open(file_path, "w") as f:
                     json.dump(data_list, f, ensure_ascii=False)
+
+    def __str__(self):
+        return f"{self.title}({self.url})"
