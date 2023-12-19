@@ -21,9 +21,9 @@ class Channel:
         self.title = self.channel["items"][0]['snippet']['localized']['title']
         self.description = self.channel["items"][0]['snippet']['localized']['description']
         self.url = self.channel["items"][0]['snippet']['customUrl']
-        self.count_subscribers = self.channel["items"][0]["statistics"]['subscriberCount']
-        self.video_count = self.channel["items"][0]["statistics"]['videoCount']
-        self.total_views = self.channel["items"][0]["statistics"]['viewCount']
+        self.count_subscribers = int(self.channel["items"][0]["statistics"]['subscriberCount'])
+        self.video_count = int(self.channel["items"][0]["statistics"]['videoCount'])
+        self.total_views = int(self.channel["items"][0]["statistics"]['viewCount'])
 
     def print_info(self):
         """Выводит в консоль информацию о канале."""
@@ -63,3 +63,51 @@ class Channel:
                     data_list.append(data_dict)
                 with open(file_path, "w") as f:
                     json.dump(data_list, f, ensure_ascii=False)
+
+    def __str__(self):
+        """
+        Метод для отображения информации для пользователя.
+        """
+        return f"{self.title}({self.url})"
+
+    def __add__(self, other):
+        """
+        Метод для операции сложения.
+        """
+        return self.count_subscribers + other.count_subscribers
+
+    def __sub__(self, other):
+        """
+        Метод для операции вычитания.
+        """
+        return self.count_subscribers - other.count_subscribers
+
+    def __gt__(self, other):
+        """
+        Метод для операции сравнения(больше)
+        """
+        return self.count_subscribers > other.count_subscribers
+
+    def __ge__(self, other):
+        """
+        Метод для операции сравнения(больше или равно)
+        """
+        return self.count_subscribers >= other.count_subscribers
+
+    def __lt__(self, other):
+        """
+        Метод для операции сравнения(меньше)
+        """
+        return self.count_subscribers < other.count_subscribers
+
+    def __le__(self, other):
+        """
+        Метод для операции сравнения(меньше или равно)
+        """
+        return self.count_subscribers <= other.count_subscribers
+
+    def __eq__(self, other):
+        """
+        Метод для операции сравнения(равенство)
+        """
+        return self.count_subscribers == other.count_subscribers
