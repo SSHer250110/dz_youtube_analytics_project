@@ -15,7 +15,18 @@ class Channel:
     youtube = build('youtube', 'v3', developerKey=api_key)
 
     def __init__(self, channel_id):
-        """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
+        """
+        Создание экземпляра класса channel.
+
+        :param channel_id: id канала.
+        :param channel: Запрос канала.
+        :param title: Название канала.
+        :param description: Описание канала.
+        :param url: Ссылка на канал.
+        :param count_subscribers: Количество подписчиков.
+        :param video_count: Количество видео.
+        :param total_views: Общее количество просмотров.
+        """
         self.__channel_id = channel_id
         self.channel = self.youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         self.title = self.channel["items"][0]['snippet']['localized']['title']
