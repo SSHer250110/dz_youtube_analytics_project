@@ -49,7 +49,7 @@ class Video:
 
 class PLVideo(Video):
     """
-    Класс со свойствами и методами плейлиста
+    Класс со свойствами и методами видео плейлиста
     """
 
     def __init__(self, id_video, id_playlist):
