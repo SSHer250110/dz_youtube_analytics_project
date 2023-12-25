@@ -1,8 +1,7 @@
-import json
 import os
 from datetime import timedelta
-
 import isodate
+
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
 
@@ -22,20 +21,20 @@ class PlayList:
         """
         Создание экземпляра класса PlayList
         :param id_playlist: id плейлиста.
-        :param data_videos_playlist: данные видеороликов в плейлисте.
+        :param info_videos_playlist: данные видеороликов в плейлисте.
         :param title: название плейлиста.
         :param url: ссылка на плейлист.
         :param ids_video: id всех видеороликов плейлиста(список).
-        :param length_videos_playlist: длительность видеороликов плейлиста.
+        :param info_videos_playlist: информация по видеороликам плейлиста.
         """
         self.id_playlist = id_playlist
-        self.data_videos_playlist = self.youtube.playlistItems().list(playlistId=self.id_playlist,
+        self.info_videos_playlist = self.youtube.playlistItems().list(playlistId=self.id_playlist,
                                                                       part="contentDetails, id, snippet, status",
                                                                       maxResults=50,
                                                                       ).execute()
-        self.title = self.data_videos_playlist["items"][0]["snippet"]["title"][:24]
+        self.title = self.info_videos_playlist["items"][0]["snippet"]["title"][:24]
         self.url = "https://www.youtube.com/playlist?list=" + self.id_playlist
-        self.ids_video: list[str] = [video['contentDetails']['videoId'] for video in self.data_videos_playlist['items']]
+        self.ids_video = [video['contentDetails']['videoId'] for video in self.info_videos_playlist['items']]
         self.length_videos_playlist = self.youtube.videos().list(part='contentDetails,statistics',
                                                                  id=','.join(self.ids_video)
                                                                  ).execute()
