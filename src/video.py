@@ -20,16 +20,23 @@ class Video:
         Создание экземпляра класса video.
 
         :param id_video: id видео.
-        :param name_video: Название видео.
+        :param title: Название видео.
         :param url_video: Ссылка на видео.
         :param number_of_views: Количество просмотров.
-        :param number_of_likes: Количество лайков.
+        :param like_count: Количество лайков.
         """
-        self.id_video = id_video
-        self.name_video = self.get_info_video()["items"][0]["snippet"]["title"]
-        self.url_video = "https://www.youtube.com/watch?v=" + self.id_video
-        self.number_of_views = self.get_info_video()["items"][0]["statistics"]["viewCount"]
-        self.number_of_likes = self.get_info_video()["items"][0]["statistics"]["likeCount"]
+        try:
+            self.id_video = id_video
+            self.title = self.get_info_video()["items"][0]["snippet"]["title"]
+            self.url_video = "https://www.youtube.com/watch?v=" + self.id_video
+            self.number_of_views = self.get_info_video()["items"][0]["statistics"]["viewCount"]
+            self.like_count = self.get_info_video()["items"][0]["statistics"]["likeCount"]
+        except IndexError:
+            self.id_video = id_video
+            self.title = None
+            self.url_video = None
+            self.number_of_views = None
+            self.like_count = None
 
     def get_info_video(self):
         """
@@ -44,7 +51,7 @@ class Video:
         """
         Метод для отображения информации для пользователя.
         """
-        return self.name_video
+        return self.title
 
 
 class PLVideo(Video):
@@ -58,20 +65,20 @@ class PLVideo(Video):
 
         :param id_video: id видео.
         :param id_playlist: id плейлиста.
-        :param name_video: Название видео.
+        :param title: Название видео.
         :param url_video: Ссылка на видео.
         :param number_of_views: Количество просмотров.
-        :param number_of_likes: Количество лайков.
+        :param like_count: Количество лайков.
         """
         super().__init__(id_video)
         self.id_playlist = id_playlist
-        self.name_video = self.get_info_video()["items"][0]["snippet"]["title"]
+        self.title = self.get_info_video()["items"][0]["snippet"]["title"]
         self.url_video = "https://www.youtube.com/watch?v=" + self.id_video
         self.number_of_views = self.get_info_video()["items"][0]["statistics"]["viewCount"]
-        self.number_of_likes = self.get_info_video()["items"][0]["statistics"]["likeCount"]
+        self.like_count = self.get_info_video()["items"][0]["statistics"]["likeCount"]
 
     def __str__(self):
         """
         Метод для отображения информации для пользователя.
         """
-        return self.name_video
+        return self.title
