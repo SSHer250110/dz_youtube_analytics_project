@@ -39,3 +39,16 @@ class PlayList:
         self.length_videos_playlist = self.youtube.videos().list(part='contentDetails,statistics',
                                                                  id=','.join(self.ids_video)
                                                                  ).execute()
+
+    @property
+    def total_duration(self):
+        """
+        Метод возвращает объект класса datetime.timedelta с суммарной длительность плейлиста
+        """
+        length_videos = timedelta(seconds=0)
+        for video in self.length_videos_playlist['items']:
+            iso_8601_duration = video['contentDetails']['duration']
+            duration = isodate.parse_duration(iso_8601_duration)
+            length_videos += duration
+        return length_videos
+
