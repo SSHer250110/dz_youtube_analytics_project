@@ -52,3 +52,14 @@ class PlayList:
             length_videos += duration
         return length_videos
 
+    def show_best_video(self):
+        """
+        Метод возвращает ссылку на самое популярное видео из плейлиста (по количеству лайков)
+        """
+        likes = 0
+        video_url = None
+        for video in self.length_videos_playlist["items"]:
+            if int(video["statistics"]["likeCount"]) > likes:
+                video_url = video["id"]
+                likes = int(video["statistics"]["likeCount"])
+        return f"https://youtu.be/{video_url}"
